@@ -1,4 +1,5 @@
 /* eslint-disable arrow-parens */
+const mongoose = require('mongoose');
 const User = require('../models/user');
 
 module.exports.createUser = (req, res) => {
@@ -15,7 +16,12 @@ module.exports.getUsers = (req, res) => {
     .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
 };
 
+// eslint-disable-next-line consistent-return
 module.exports.getUsersId = (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
+    return res.status(404).send({ message: 'not found user' });
+  }
+
   User.findById(req.params.userId)
     .then(user => res.send({ data: user }))
     .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));

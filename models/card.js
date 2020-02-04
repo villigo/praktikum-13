@@ -28,8 +28,7 @@ const cardSchema = new mongoose.Schema({
 });
 
 cardSchema.path('link').validate((val) => {
-  // eslint-disable-next-line no-useless-escape
-  const url = /^(?:(?:https?):\/\/)?(?:\S+(?::\S*)?@)?(?:(?:([a-z0-9][a-z0-9\-])?([a-z\-]{2,}|\d{1,3}))(?:\.(?:[a-z0-9\-])*[a-z0-9])*(?:\.(?:([a-z0-9]{2,}|\d{1,3})#?)(:\d{1,5})?))(?:\/[^\s]*)?$/;
+  const url = /^(?:(?:https?):\/\/)?(?:\S+(?::\S*)?@)?(?:(?:([a-z0-9][a-z0-9-])?([a-z-]{2,}|\d{1,3}))(?:\.(?:[a-z0-9-])*[a-z0-9])*(?:\.(?:([a-z0-9]{2,}|\d{1,3})#?)(:\d{1,5})?))(?:\/[^\s]*)?$/;
   return url.test(val);
 }, 'Invalid card URL.');
 

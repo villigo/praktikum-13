@@ -1,4 +1,5 @@
 /* eslint-disable arrow-parens */
+const mongoose = require('mongoose');
 const Card = require('../models/card');
 
 module.exports.createCard = (req, res) => {
@@ -16,7 +17,12 @@ module.exports.getCards = (req, res) => {
     .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
 };
 
+// eslint-disable-next-line consistent-return
 module.exports.delCardId = (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.cardId)) {
+    return res.status(404).send({ message: 'not found card' });
+  }
+
   Card.findByIdAndRemove(req.params.cardId)
     .populate('owner')
     .then(card => res.send({ data: card }))
