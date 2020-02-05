@@ -23,6 +23,11 @@ module.exports.getUsersId = (req, res) => {
   }
 
   User.findById(req.params.userId)
-    .then(user => res.send({ data: user }))
+    .then(user => {
+      if (!user) {
+        return res.status(404).end();
+      }
+      return res.send({ data: user });
+    })
     .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
 };

@@ -25,6 +25,11 @@ module.exports.delCardId = (req, res) => {
 
   Card.findByIdAndRemove(req.params.cardId)
     .populate('owner')
-    .then(card => res.send({ data: card }))
+    .then(card => {
+      if (!card) {
+        return res.status(404).end();
+      }
+      return res.send({ data: card });
+    })
     .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
 };
